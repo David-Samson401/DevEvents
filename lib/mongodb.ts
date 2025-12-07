@@ -36,45 +36,9 @@ globalForMongoose._mongooseCache = cached;
  * In development, Next.js reloads modules frequently. Caching the connection
  * on the global object prevents creating a new connection on every reload.
  */
-<<<<<<< HEAD
-async function connectDB(): Promise<typeof mongoose> {
-    // Return existing connection if available
-    if (cached.conn) {
-        return cached.conn;
-    }
-
-    // Return existing connection promise if one is in progress
-    if (!cached.promise) {
-        // Validate MongoDB URI exists
-        if (!MONGODB_URI) {
-            throw new Error(
-                'Please define the MONGODB_URI environment variable inside .env.local.local'
-            );
-        }
-        const options = {
-            bufferCommands: false, // Disable Mongoose buffering
-        };
-
-        // Create a new connection promise
-        cached.promise = mongoose.connect(MONGODB_URI!, options).then((mongoose) => {
-            return mongoose;
-        });
-    }
-
-    try {
-        // Wait for the connection to establish
-        cached.conn = await cached.promise;
-    } catch (error) {
-        // Reset promise on error to allow retry
-        cached.promise = null;
-        throw error;
-    }
-
-=======
 export async function connectMongoDB(): Promise<Mongoose> {
   // If we already have an active connection, reuse it.
   if (cached.conn) {
->>>>>>> 06771c6b53fd0f74a76376d1a19b51e0e3e828f5
     return cached.conn;
   }
 

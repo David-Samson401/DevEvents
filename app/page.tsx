@@ -1,11 +1,32 @@
+import { cacheLife } from "next/cache";
 import EventCard from "./components/EventCard";
 import ExploreBtn from "./components/ExploreBtn";
-import { events } from "@/lib/constants";
+import { events as staticEvents } from "@/lib/constants";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 const page = async () => {
-    const response = await fetch(`${BASE_URL}/api/events`)
-    const { events } = await response.json();
+  'use cache';
+  cacheLife('hours')
+  // Start with static demo events
+  let events = [...staticEvents];
+
+  try {
+    if (BASE_URL) {
+      const response = await fetch(`${BASE_URL}/api/events`, { cache: "no-store" });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (Array.isArray(data.events) && data.events.length > 0) {
+          // Combine DB events with static demo events
+          events = [...data.events, ...staticEvents];
+        }
+      }
+    }
+  } catch (error) {
+    // If the API call fails, we gracefully fall back to staticEvents only
+    console.error("Failed to fetch events from API, using static fallback.", error);
+  }
 
   return (
     <section>
