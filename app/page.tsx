@@ -11,7 +11,7 @@ const page = async () => {
   try {
     if (BASE_URL) {
       const response = await fetch(`${BASE_URL}/api/events`, {
-        cache: "no-store",
+        next: { revalidate: 60 },
       });
 
       if (response.ok) {
