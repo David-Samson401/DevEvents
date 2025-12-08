@@ -466,4 +466,10 @@ void main() {
   return createPortal(
     <div
       ref={containerRef}
-     
+      className={`fixed inset-0 pointer-events-none z-0 ${className}`}
+    />,
+    portalRoot
+  );
+};
+
+export default LightRays;

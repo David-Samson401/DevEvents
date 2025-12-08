@@ -1,5 +1,5 @@
 import { Document, Model, Schema, Types, model, models } from 'mongoose';
-import { Event, IEventDocument } from './event.model';
+import { Event } from './event.model';
 
 // Booking domain type used throughout the app
 export interface IBooking {
