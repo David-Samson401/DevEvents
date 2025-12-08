@@ -5,6 +5,10 @@ import { getSimilarEventsBySlug } from "@/lib/actions/event.actions";
 import { IEvent } from "@/database";
 import EventCard from "@/app/components/EventCard";
 
+
+export const dynamic = "force-dynamic";
+
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const EventDetailItem = ({
@@ -55,7 +59,7 @@ const EventDetailsPage = async ({
   const { slug } = await params;
   const base = BASE_URL ?? "";
 
-  const request = await fetch(`${base}/api/events/${slug}`, {
+  const request = await fetch("/api/events", {
     cache: "no-store",
   });
 

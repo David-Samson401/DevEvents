@@ -3,6 +3,10 @@ import EventCard from "./components/EventCard";
 import ExploreBtn from "./components/ExploreBtn";
 import { events as staticEvents } from "@/lib/constants";
 
+
+export const dynamic = "force-dynamic";
+
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const page = async () => {
@@ -13,7 +17,7 @@ const page = async () => {
 
   try {
     if (BASE_URL) {
-      const response = await fetch(`${BASE_URL}/api/events`, { cache: "no-store" });
+      const response = await fetch("/api/events", { cache: "no-store" });
 
       if (response.ok) {
         const data = await response.json();
