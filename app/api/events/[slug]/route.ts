@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import connectDB from "@/lib/mongodb";
-import { Event, IEvent } from "@/database/event.model";
+import { Event } from "@/database/event.model";
 
 // Define route params type for type safety
 type RouteParams = {
@@ -68,17 +68,17 @@ export async function GET(
         );
       }
 
-        // Return generic error message (detailed error already logged in dev)
-        return NextResponse.json(
-          { message: "Failed to fetch event" },
-          { status: 500 }
-        );
-      }
-  
-      // Handle unknown errors (error is not an instance of Error)
+      // Return generic error message (detailed error already logged in dev)
       return NextResponse.json(
-        { message: "An unexpected error occurred" },
+        { message: "Failed to fetch event" },
         { status: 500 }
       );
     }
+
+    // Handle unknown errors (error is not an instance of Error)
+    return NextResponse.json(
+      { message: "An unexpected error occurred" },
+      { status: 500 }
+    );
   }
+}
