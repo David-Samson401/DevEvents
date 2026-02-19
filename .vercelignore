@@ -1,0 +1,10 @@
+# Seed script - local development only
+scripts/
+
+# Local environment files
+.env.local
+*.local
+
+# Development files
+.env.development.local
+.env.test.local

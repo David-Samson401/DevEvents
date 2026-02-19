@@ -24,7 +24,8 @@ export const getUpcomingEvents = async (limit?: number) => {
 
     const events = await query.lean();
     return events;
-  } catch {
+  } catch (error) {
+    console.error("Failed to fetch upcoming events:", error);
     return [];
   }
 };

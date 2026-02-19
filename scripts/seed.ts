@@ -1,6 +1,6 @@
 import { config } from "dotenv";
 import mongoose from "mongoose";
-import { Event } from "./event.model";
+import { Event } from "../database/event.model";
 
 // Skip seed script in production (Vercel builds)
 if (process.env.NODE_ENV === "production" || process.env.VERCEL) {
