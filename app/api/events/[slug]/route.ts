@@ -16,7 +16,7 @@ type RouteParams = {
  */
 export async function GET(
   req: NextRequest,
-  { params }: RouteParams
+  { params }: RouteParams,
 ): Promise<NextResponse> {
   try {
     // Connect to database
@@ -29,7 +29,7 @@ export async function GET(
     if (!slug || typeof slug !== "string" || slug.trim() === "") {
       return NextResponse.json(
         { message: "Invalid or missing slug parameter" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -43,14 +43,14 @@ export async function GET(
     if (!event) {
       return NextResponse.json(
         { message: `Event with slug '${normalizedSlug}' not found` },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
     // Return successful response with events data
     return NextResponse.json(
       { message: "Event fetched successfully", event },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     // Log error for debugging (only in development)
@@ -64,21 +64,21 @@ export async function GET(
       if (error.message.includes("MONGODB_URI")) {
         return NextResponse.json(
           { message: "Database configuration error" },
-          { status: 500 }
+          { status: 500 },
         );
       }
 
-        // Return generic error message (detailed error already logged in dev)
-        return NextResponse.json(
-          { message: "Failed to fetch event" },
-          { status: 500 }
-        );
-      }
-  
-      // Handle unknown errors (error is not an instance of Error)
+      // Return generic error message (detailed error already logged in dev)
       return NextResponse.json(
-        { message: "An unexpected error occurred" },
-        { status: 500 }
+        { message: "Failed to fetch event" },
+        { status: 500 },
       );
     }
+
+    // Handle unknown errors (error is not an instance of Error)
+    return NextResponse.json(
+      { message: "An unexpected error occurred" },
+      { status: 500 },
+    );
   }
+}

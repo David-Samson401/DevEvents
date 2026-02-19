@@ -1,6 +1,34 @@
 import { Event } from "@/database/event.model";
 import connectDB from "@/lib/mongodb";
 
+export const getAllEvents = async () => {
+  try {
+    await connectDB();
+    const events = await Event.find().sort({ date: 1 }).lean();
+    return events;
+  } catch {
+    return [];
+  }
+};
+
+export const getUpcomingEvents = async (limit?: number) => {
+  try {
+    await connectDB();
+    const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD format
+
+    let query = Event.find({ date: { $gte: today } }).sort({ date: 1 });
+
+    if (limit) {
+      query = query.limit(limit);
+    }
+
+    const events = await query.lean();
+    return events;
+  } catch {
+    return [];
+  }
+};
+
 export const getSimilarEventsBySlug = async (slug: string) => {
   try {
     await connectDB();

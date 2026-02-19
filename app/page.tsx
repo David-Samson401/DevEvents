@@ -1,35 +1,55 @@
+import Link from "next/link";
+import { Suspense } from "react";
 import EventCard from "./components/EventCard";
 import ExploreBtn from "./components/ExploreBtn";
-import { events as staticEvents } from "@/lib/constants";
+import { getUpcomingEvents } from "@/lib/actions/event.actions";
+import { IEvent } from "@/database";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const EventsLoading = () => (
+  <div className="events list-none p-0 m-0">
+    {[1, 2, 3].map((i) => (
+      <div key={i} className="h-[400px] bg-dark-200 rounded-lg animate-pulse" />
+    ))}
+  </div>
+);
 
-const page = async () => {
-  // Start with static demo events
-  let events = [...staticEvents];
+const EmptyEvents = () => (
+  <div className="flex flex-col items-center justify-center py-16 text-center">
+    <p className="text-light-200 text-lg mb-4">
+      No upcoming events at the moment.
+    </p>
+    <p className="text-light-200 text-sm">
+      Check back soon for new developer events!
+    </p>
+  </div>
+);
 
-  try {
-    if (BASE_URL) {
-      const response = await fetch(`${BASE_URL}/api/events`, {
-        next: { revalidate: 60 },
-      });
+const UpcomingEventsList = async () => {
+  const events = await getUpcomingEvents(6);
 
-      if (response.ok) {
-        const data = await response.json();
-        if (Array.isArray(data.events) && data.events.length > 0) {
-          // Combine DB events with static demo events
-          events = [...data.events, ...staticEvents];
-        }
-      }
-    }
-  } catch (error) {
-    // If the API call fails, we gracefully fall back to staticEvents only
-    console.error(
-      "Failed to fetch events from API, using static fallback.",
-      error
-    );
+  if (!events || events.length === 0) {
+    return <EmptyEvents />;
   }
 
+  return (
+    <ul className="events list-none p-0 m-0">
+      {events.map((event: IEvent) => (
+        <li key={event.slug}>
+          <EventCard
+            title={event.title}
+            image={event.image}
+            slug={event.slug}
+            location={event.location}
+            date={event.date}
+            time={event.time}
+          />
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+const HomePage = () => {
   return (
     <section>
       <h1 className="text-center">
@@ -41,19 +61,23 @@ const page = async () => {
 
       <ExploreBtn />
 
-      <div className="mt-20 space-y-7">
-        <h3>Featured Events</h3>
+      <div id="events" className="mt-20 space-y-7">
+        <div className="flex items-center justify-between">
+          <h3>Upcoming Events</h3>
+          <Link
+            href="/events"
+            className="text-primary hover:text-primary/80 text-sm font-medium transition-colors"
+          >
+            View All Events →
+          </Link>
+        </div>
 
-        <ul className="events list-none p-0 m-0">
-          {events.map((event) => (
-            <li key={event.title}>
-              <EventCard {...event} />
-            </li>
-          ))}
-        </ul>
+        <Suspense fallback={<EventsLoading />}>
+          <UpcomingEventsList />
+        </Suspense>
       </div>
     </section>
   );
 };
 
-export default page;
+export default HomePage;

@@ -1,7 +1,10 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import BookEvent from "@/components/BookEvent";
-import { getSimilarEventsBySlug, getEventBySlug } from "@/lib/actions/event.actions";
+import {
+  getSimilarEventsBySlug,
+  getEventBySlug,
+} from "@/lib/actions/event.actions";
 import { IEvent } from "@/database";
 import EventCard from "@/app/components/EventCard";
 import { Suspense } from "react";
@@ -53,6 +56,9 @@ const EventDetailsContent = async ({ slug }: { slug: string }) => {
     return notFound();
   }
 
+  // Extract _id for booking (MongoDB documents have _id)
+  const eventId = (event as any)._id?.toString() || "";
+
   const {
     description,
     image,
@@ -67,7 +73,18 @@ const EventDetailsContent = async ({ slug }: { slug: string }) => {
     tags,
   } = event;
 
-  if (!image || !overview || !date || !time || !location || !mode || !audience || !agenda || !organizer || !tags) {
+  if (
+    !image ||
+    !overview ||
+    !date ||
+    !time ||
+    !location ||
+    !mode ||
+    !audience ||
+    !agenda ||
+    !organizer ||
+    !tags
+  ) {
     return notFound();
   }
 
@@ -83,18 +100,18 @@ const EventDetailsContent = async ({ slug }: { slug: string }) => {
       </div>
       <div className="details">
         {/*Left Side - Event Content*/}
-<div className="content">
-{image && (
-  <Image
-    src={image}
-    alt="Event Banner"
-    width={800}
-    height={800}
-    className="banner"
-  />
-)}
+        <div className="content">
+          {image && (
+            <Image
+              src={image}
+              alt="Event Banner"
+              width={800}
+              height={800}
+              className="banner"
+            />
+          )}
 
-  <section className="flex-col-gap-2">
+          <section className="flex-col-gap-2">
             <h2>Overview</h2>
             <p>{overview}</p>
           </section>
@@ -139,21 +156,21 @@ const EventDetailsContent = async ({ slug }: { slug: string }) => {
                 Join {bookings} people who have already booked their spot!
               </p>
             ) : (
-                <p className="text-sm">be the first to book your spot!</p>
+              <p className="text-sm">be the first to book your spot!</p>
             )}
 
-            <BookEvent />
+            <BookEvent eventId={eventId} slug={slug} />
           </div>
         </aside>
-
       </div>
 
       <div className="flex w-full flex-col gap-4 pt-20">
         <h2>Similar Events</h2>
         <div className="events">
-          {similarEvents.length > 0 && similarEvents.map((similarEvent: IEvent, index: number) => (
-            <EventCard key={index} {...similarEvent} />
-          ))}
+          {similarEvents.length > 0 &&
+            similarEvents.map((similarEvent: IEvent, index: number) => (
+              <EventCard key={index} {...similarEvent} />
+            ))}
         </div>
       </div>
     </section>
@@ -168,7 +185,13 @@ const EventDetailsPage = async ({
   const { slug } = await params;
 
   return (
-    <Suspense fallback={<section id="event"><p>Loading event...</p></section>}>
+    <Suspense
+      fallback={
+        <section id="event">
+          <p>Loading event...</p>
+        </section>
+      }
+    >
       <EventDetailsContent slug={slug} />
     </Suspense>
   );
