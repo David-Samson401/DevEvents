@@ -5,9 +5,10 @@ describe("Event Detail Page", () => {
     cy.visit("/events/non-existent-event-slug-12345", {
       failOnStatusCode: false,
     });
-    cy.get("body")
-      .should("contain.text", "404")
-      .or("contain.text", "not found");
+    cy.get("body").should(($body) => {
+      const text = $body.text().toLowerCase();
+      expect(text.includes("404") || text.includes("not found")).to.be.true;
+    });
   });
 
   it("should display event details when event exists", () => {
