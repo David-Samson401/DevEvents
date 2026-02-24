@@ -6,12 +6,12 @@
 
 **Discover, Create, and Book Developer Events Worldwide**
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen?style=for-the-badge)](https://next-crash-project-7cls.vercel.app/)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen?style=for-the-badge)](https://next-crash-project-m6f5.vercel.app/)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-8-green?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/)
 
-[Live Demo](https://next-crash-project-7cls.vercel.app/) • [Report Bug](https://github.com/David-Samson401/Next-Crash-Project/issues) • [Request Feature](https://github.com/David-Samson401/Next-Crash-Project/issues)
+[Live Demo](https://next-crash-project-m6f5.vercel.app/) • [Report Bug](https://github.com/David-Samson401/DevEvents/issues) • [Request Feature](https://github.com/David-Samson401/DevEvents/issues)
 
 </div>
 
@@ -112,8 +112,8 @@ DevEvents aggregates developer events in one place, allowing users to:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/David-Samson401/Next-Crash-Project.git
-   cd Next-Crash-Project
+   git clone https://github.com/David-Samson401/DevEvents.git
+   cd DevEvents
    ```
 
 2. **Install dependencies**
@@ -161,7 +161,7 @@ DevEvents aggregates developer events in one place, allowing users to:
 ## 📁 Project Structure
 
 ```
-Next-Crash-Project/
+DevEvents/
 ├── app/
 │   ├── api/
 │   │   └── events/
@@ -322,7 +322,7 @@ npm run cy:run:headed
 The application is deployed on **Vercel** with automatic deployments from the \`main\` branch.
 
 ### Live URL
-🔗 **[https://next-crash-project-7cls.vercel.app/](https://next-crash-project-7cls.vercel.app/)**
+🔗 **[https://next-crash-project-m6f5.vercel.app/](https://next-crash-project-m6f5.vercel.app/)**
 
 ### Environment Variables (Vercel)
 
@@ -376,8 +376,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **David Samson** - Developer
 
 - GitHub: [@David-Samson401](https://github.com/David-Samson401)
-- Project Link: [https://github.com/David-Samson401/Next-Crash-Project](https://github.com/David-Samson401/Next-Crash-Project)
-- Live Demo: [https://next-crash-project-7cls.vercel.app/](https://next-crash-project-7cls.vercel.app/)
+- Project Link: [https://github.com/David-Samson401/DevEvents](https://github.com/David-Samson401/DevEvents)
+- Live Demo: [https://next-crash-project-m6f5.vercel.app/](https://next-crash-project-m6f5.vercel.app/)
 
 ---
 
